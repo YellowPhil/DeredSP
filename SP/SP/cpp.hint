@@ -1,0 +1,2 @@
+#define SP_API __declspec(dllexport)
+#define SP_API __declspec(dllimport)
