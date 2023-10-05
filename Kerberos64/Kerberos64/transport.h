@@ -10,7 +10,7 @@
 class Transport {
 public:
 	virtual int Ping(std::time_t time) = 0;
-	virtual int SendData(const std::wstring &endpoint, LPVOID data) = 0;
+	virtual int SendData(const std::wstring &endpoint, LPVOID data, size_t dataLen) = 0;
 };
 
 class HTTPSTransport : public Transport {
@@ -18,6 +18,8 @@ private:
 	std::wstring _server_url;
 	std::wstring _PostVerb = L"POST";
 	std::wstring _pingEndpoint = L"/ping";
+	std::wstring _dataEndpoint = L"/data";
+	std::wstring _postHeaders = L"Content-Type: application/x-www-form-urlencoded\r\n";
 	HINTERNET _hInet;
 public:
 	HTTPSTransport(const std::wstring& server_url);

