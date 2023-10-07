@@ -21,6 +21,9 @@
     <ClInclude Include="transport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="agent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp">
@@ -29,8 +32,8 @@
     <ClCompile Include="transport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pch.h">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="agent.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

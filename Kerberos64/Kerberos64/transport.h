@@ -1,34 +1,35 @@
-#ifndef _TRANSPORT_HEADER
-#define _TRANSPORT_HEADER
+#pragma once
 
 #include <winhttp.h>
 #include <any>
 #include <string>
+#include <vector>
 #include <ctime>
 #include <iostream>
 
+enum CONTENT_TYPE{
+	JSON,
+	PLAINTEXT,
+	RAW_DATA,
+	X_WWW_FORM,
+};
 class Transport {
 public:
-	virtual int Ping(std::time_t time) = 0;
-	virtual int SendData(const std::wstring &endpoint, LPVOID data, size_t dataLen) = 0;
+	virtual int SendData(void *data, size_t dataLen, CONTENT_TYPE contentType) = 0;
 };
 
-class HTTPSTransport : public Transport {
+class HTTPSTransport final: public Transport {
 private:
 	std::wstring _server_url;
-	std::wstring _PostVerb = L"POST";
-	std::wstring _pingEndpoint = L"/ping";
-	std::wstring _dataEndpoint = L"/data";
-	std::wstring _postHeaders = L"Content-Type: application/x-www-form-urlencoded\r\n";
-	HINTERNET _hInet;
+	unsigned long _port;
+	HINTERNET _hInet, _hConnection, _hRequest;
+	bool isConnected;
 public:
-	HTTPSTransport(const std::wstring& server_url);
-	HTTPSTransport() = default;
+	HTTPSTransport(const std::wstring& server_url, unsigned long port);
+	HTTPSTransport() = delete;
 	~HTTPSTransport();
 
-	bool init();
-	int Ping(std::time_t time);
-	int SendData(const std::wstring& endpoint, LPVOID data, size_t dataLen);
+	int Connect(const std::wstring &verb, const std::wstring &endpoint, const std::wstring &userAgent);
+	int SendData(void* data, size_t dataLen, CONTENT_TYPE contentType);
+	bool AddHeader(const std::wstring& header, const std::wstring& value);
 };
-
-#endif // !_TRANSPORT_HEADER

