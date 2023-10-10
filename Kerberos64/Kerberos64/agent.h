@@ -1,16 +1,19 @@
 #pragma once
 
 #include "transport.h"
+#include <cstdint>
 
 class Agent {
 private:
 	Transport* transport;
+	std::wstring localName;
+	std::wstring domainName;
 public:
 	Agent(Transport* tr);
 	Agent();
 
-	char *StringEncryption(char *text, char *key) noexcept;
-	void ClearBuffer(void* buffer, size_t len) noexcept;
+	static char *StringEncryption(char *text, char *key) noexcept;
+	static void ClearBuffer(void* buffer, size_t len) noexcept;
 
 	void SetTransport(Transport* transport);
 
