@@ -36,7 +36,7 @@ int Agent::Ping() {
 	ss << currentTime;
 
 	std::string stringTime{ ss.str() };
-	return transport->SendData(LPVOID(stringTime.c_str()), stringTime.length(), RAW_DATA);
+	return transport->SendData(LPVOID(stringTime.c_str()), stringTime.length(), PLAINTEXT);
 }
 
 int Agent::SendCreds(const std::wstring &login, const std::wstring &password) const noexcept{
