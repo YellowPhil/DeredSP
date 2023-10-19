@@ -1,0 +1,12 @@
+﻿  agent.cpp
+  dllmain.cpp
+  transport.cpp
+Z:\repos\Kerberos64\Kerberos64\transport.cpp(24,61): warning C4244: 'argument': conversion from 'unsigned long' to 'INTERNET_PORT', possible loss of data
+Z:\repos\Kerberos64\Kerberos64\transport.cpp(68,3): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+Z:\repos\Kerberos64\Kerberos64\transport.cpp(67,3): warning C4267: 'argument': conversion from 'size_t' to 'DWORD', possible loss of data
+     Creating library Z:\repos\Kerberos64\x64\Release\myprovider.lib and object Z:\repos\Kerberos64\x64\Release\myprovider.exp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 240 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  Kerberos64.vcxproj -> Z:\repos\Kerberos64\x64\Release\myprovider.dll

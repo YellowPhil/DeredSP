@@ -5,3 +5,4 @@
 Debug/
 *.tlog/
 .vs/
+.idea

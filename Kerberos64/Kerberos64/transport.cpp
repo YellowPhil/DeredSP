@@ -9,10 +9,13 @@
 #pragma comment(lib, "winhttp.lib")
 
 HTTPSTransport::HTTPSTransport(const std::wstring &server_url, unsigned long port):
-	_server_url(server_url), _port(port), isConnected(false) {}
+	_server_url(server_url), _port(port) {
+	isConnected = false;
+	_hConnection = _hInet = _hRequest = NULL;
+}
 
 int HTTPSTransport::Connect(const std::wstring &verb, const std::wstring &endpoint, 
-	const std::wstring& userAgent = L"Mozilla/5.0 (Windows NT 5.1; rv:7.0.1) Gecko/20100101 Firefox/7.0.1")
+	const std::wstring& userAgent)
  {
 	_hInet = WinHttpOpen(userAgent.c_str(), WINHTTP_ACCESS_TYPE_DEFAULT_PROXY, WINHTTP_NO_PROXY_NAME, WINHTTP_NO_PROXY_BYPASS, WINHTTP_FLAG_SECURE_DEFAULTS);
 	if (!_hInet) {
@@ -67,12 +70,13 @@ int HTTPSTransport::SendData(void* data, size_t dataLen, CONTENT_TYPE contentTyp
 	return bResult == false;
 }
 
-bool HTTPSTransport::AddHeader(const std::wstring &header, const std::wstring &value) {
+int HTTPSTransport::AddHeader(std::wstring header, std::wstring value) {
 	if (!isConnected) return 123;
 
+	std::wstring headerString = header + L": " + value;
 	auto bResult = WinHttpAddRequestHeaders(
 		_hRequest,
-		(header + L": " + value + L"\r\n").c_str(),
+		headerString.c_str(),
 		DWORD(-1),
 		WINHTTP_ADDREQ_FLAG_COALESCE_WITH_COMMA
 	);
