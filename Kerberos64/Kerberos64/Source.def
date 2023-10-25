@@ -1,0 +1,3 @@
+LIBRARY
+EXPORTS
+	SpLsaModeInitialize		=	custom_SpLsaModeInitialize

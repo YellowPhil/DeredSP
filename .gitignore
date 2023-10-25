@@ -6,3 +6,7 @@ Debug/
 *.tlog/
 .vs/
 .idea
+*.pdb
+*.log
+*.json
+*.command

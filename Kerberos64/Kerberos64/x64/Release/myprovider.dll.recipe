@@ -2,7 +2,7 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
-      <FullPath>Z:\repos\Kerberos64\x64\Release\myprovider.dll</FullPath>
+      <FullPath>C:\Users\PEESEE\Downloads\mimikatz-master\x64\Release\myprovider.dll</FullPath>
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
