@@ -1,9 +1,12 @@
 #include "PE64FILE.h"
+#include <stdexcept>
 
 PE64FILE::PE64FILE(FILE* _Ppefile) {
+	if (!_Ppefile) {
+		throw std::invalid_argument("File pointer is null");
+	}
 	Ppefile = _Ppefile;
 	ParseFile();
-
 }
 
 // ADDRESS RESOLVERS
@@ -28,6 +31,11 @@ DWORD PE64FILE::resolve(DWORD VA, int index) {
 void PE64FILE::ParseDOSHeader() {
 	fseek(Ppefile, 0, SEEK_SET);
 	fread(&PEFILE_DOS_HEADER, sizeof(___IMAGE_DOS_HEADER), 1, Ppefile);
+
+	if (PEFILE_DOS_HEADER.e_lfanew != 0x5a4d) {
+		printf("%s", "ERROR: MAGIC DIDN'T happen\n\n");
+	}
+	printf("\n\n%x\n\n", PEFILE_DOS_HEADER.e_lfanew);
 
 	PEFILE_DOS_HEADER_EMAGIC = PEFILE_DOS_HEADER.e_magic;
 	PEFILE_DOS_HEADER_LFANEW = PEFILE_DOS_HEADER.e_lfanew;
@@ -157,6 +165,7 @@ void PE64FILE::ParseRichHeader() {
 	char* dataPtr = new char[PEFILE_DOS_HEADER_LFANEW];
 	fseek(Ppefile, 0, SEEK_SET);
 	fread(dataPtr, PEFILE_DOS_HEADER_LFANEW, 1, Ppefile);
+	printf("Error while parsing Rich Header.");
 
 	int index_ = 0;
 
@@ -238,3 +247,12 @@ void PE64FILE::ParseFile() {
 	ParseImportDirectory();
 	ParseBaseReloc();
 }
+
+FILE* PE64FILE::Get() const noexcept {
+	return Ppefile;
+}
+
+PE64FILE::~PE64FILE() {
+	if (Ppefile) fclose(Ppefile);
+}
+

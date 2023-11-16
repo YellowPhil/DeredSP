@@ -15,21 +15,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PE64FILE.cpp">
+    <ClCompile Include="Packer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PE64FILE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PEFILE.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="PEFILE_CUSTOM_STRUCTS.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="winntdef.h">
+    <ClInclude Include="Packer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

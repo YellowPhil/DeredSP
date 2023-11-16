@@ -4,7 +4,6 @@ typedef unsigned char BYTE;
 typedef unsigned short WORD;
 typedef unsigned long DWORD;
 typedef unsigned long long QWORD;
-typedef unsigned long LONG;
 typedef __int64 LONGLONG;
 typedef unsigned __int64 ULONGLONG;
 
@@ -51,7 +50,7 @@ typedef struct __IMAGE_DOS_HEADER {
     WORD   e_oemid;
     WORD   e_oeminfo;
     WORD   e_res2[10];
-    LONG   e_lfanew;
+    unsigned long e_lfanew;
 } ___IMAGE_DOS_HEADER, * ___PIMAGE_DOS_HEADER;
 
 typedef struct __IMAGE_DATA_DIRECTORY {

@@ -5,11 +5,10 @@
 
 class PE64FILE
 {
-public:
-	PE64FILE(FILE* Ppefile);
-
 private:
     FILE* Ppefile;
+    std::string path;
+public:
     int _import_directory_count, _import_directory_size;
     int _basreloc_directory_count;
 
@@ -19,7 +18,7 @@ private:
 
     // DOS HEADER
     DWORD PEFILE_DOS_HEADER_EMAGIC;
-    LONG  PEFILE_DOS_HEADER_LFANEW;
+    unsigned long PEFILE_DOS_HEADER_LFANEW;
 
     // RICH HEADER
     RICH_HEADER_INFO PEFILE_RICH_HEADER_INFO;
@@ -68,6 +67,7 @@ private:
     
     ___PIMAGE_BASE_RELOCATION PEFILE_BASERELOC_TABLE;
 
+private:
     int  locate(DWORD VA);
     DWORD resolve(DWORD VA, int index);
 
@@ -78,6 +78,13 @@ private:
     void ParseImportDirectory();
     void ParseBaseReloc();
     void ParseRichHeader();
+
+public:
+	PE64FILE(FILE* Ppefile);
+    PE64FILE(const std::string& path);
+	PE64FILE() = default;
+    ~PE64FILE();
+    FILE *Get() const noexcept;
 
 };
 

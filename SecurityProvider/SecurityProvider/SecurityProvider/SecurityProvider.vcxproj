@@ -24,6 +24,7 @@
     <ProjectGuid>{d73dc874-970c-4710-8405-2a5fd71d3927}</ProjectGuid>
     <RootNamespace>SecurityProvider</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Agent</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -102,12 +103,15 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>Z:\repos\SecurityProvider\SecurityProvider;Z:\repos\SecurityProvider\SecurityProvider;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winhttp.lib;Secur32.lib;iphlpapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -116,23 +120,37 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>Z:\repos\SecurityProvider\SecurityProvider;</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>winhttp.lib;Secur32.lib;iphlpapi.lib;secur32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="PE.cpp" />
-    <ClCompile Include="SecurityProvider.cpp" />
+    <ClCompile Include="Agent.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pe mapper.cpp" />
+    <ClCompile Include="StreamBufRedirect.cpp" />
+    <ClCompile Include="TaskRunner.cpp" />
+    <ClCompile Include="transport.cpp" />
+    <ClCompile Include="utils.cpp" />
+    <ClCompile Include="wnetwrap.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PE.h" />
+    <ClInclude Include="Agent.h" />
+    <ClInclude Include="StreamBufRedirect.h" />
+    <ClInclude Include="TaskRunner.h" />
+    <ClInclude Include="transport.h" />
+    <ClInclude Include="utils.h" />
     <ClInclude Include="winntdef.h" />
+    <ClInclude Include="wnetwrap.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
