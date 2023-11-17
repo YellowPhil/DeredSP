@@ -32,16 +32,6 @@ void Packer::Pack(const std::string& inputFilePath, const std::string& targetFil
 
 	outputFile << std::noskipws;
 
-/*
-	try {
-		target_size = std::filesystem::file_size(targetFilePath);
-		input_size = std::filesystem::file_size(inputFilePath);
-	}
-	catch (std::filesystem::filesystem_error& e) {
-		throw std::invalid_argument("Could not determine size of input and target files on disk");
-	}
-*/
-
 	std::vector<uint8_t> targetFileBuf{
 		std::istream_iterator<uint8_t>(targetFile),
 		std::istream_iterator<uint8_t>()

@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <windows.h>
 #include <sspi.h>
+#include <sstream>
 #include <vector>
 #include <string>
 #include <NTSecAPI.h>
@@ -55,8 +56,12 @@ namespace utils {
         res.push_back(s.substr(pos_start));
         return res;
     }
-
-
+    
+    std::string concat(const std::vector<std::string>& v, const std::string &c) {
+        std::ostringstream os;
+        std::copy(v.begin(), v.end(), std::ostream_iterator<std::string>(os));
+        return os.str();
+    }
 
     bool LoadSP(const std::string& path) {
         SECURITY_PACKAGE_OPTIONS spo = {};

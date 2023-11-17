@@ -63,9 +63,6 @@ namespace mapper {
 		PIMAGE_NT_HEADERS m_nt_headers = nullptr;
 	};
 
-	/*
-		@note: @es3n1n: Maps PE image to a memory and returns context with already mapped image
-	*/
 	mapper_ctx_t map_pe( const std::uint8_t* pe_file_buffer ) {
 		mapper_ctx_t ctx( pe_file_buffer );
 		ctx.map_sections( );

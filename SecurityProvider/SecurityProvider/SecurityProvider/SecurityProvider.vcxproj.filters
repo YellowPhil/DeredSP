@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\reflection">
+      <UniqueIdentifier>{37ecd7cf-d6e8-4598-8258-6ae86ffe2312}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Agent.cpp">
@@ -33,11 +36,17 @@
     <ClCompile Include="TaskRunner.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StreamBufRedirect.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="C:\Users\PEESEE\Downloads\BulletTrain-master\BulletTrain\BasicPE.cpp">
+      <Filter>Source Files\reflection</Filter>
     </ClCompile>
-    <ClCompile Include="pe mapper.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="C:\Users\PEESEE\Downloads\BulletTrain-master\BulletTrain\IOUtils.cpp">
+      <Filter>Source Files\reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\PEESEE\Downloads\BulletTrain-master\BulletTrain\Loader.cpp">
+      <Filter>Source Files\reflection</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\PEESEE\Downloads\BulletTrain-master\BulletTrain\Override.cpp">
+      <Filter>Source Files\reflection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

